@@ -235,8 +235,27 @@ class Labelme2YOLO(object):
         img_path = os.path.join(image_dir_path, target_dir,img_name)
         
         if not os.path.exists(img_path):
-            img = utils.img_b64_to_arr(json_data['imageData'])
-            PIL.Image.fromarray(img).save(img_path)
+            # 检查是否有可用的 imageData
+            if 'imageData' in json_data and json_data['imageData'] is not None:
+                # 原有逻辑：从 base64 重建图片
+                img = utils.img_b64_to_arr(json_data['imageData'])
+                PIL.Image.fromarray(img).save(img_path)
+            else:
+                # 备用方案：从本地复制同名图片文件
+                base_name = json_name.replace('.json', '')
+                img_extensions = ['.png', '.jpg', '.jpeg', '.bmp', '.tiff']
+                
+                source_img_path = None
+                for ext in img_extensions:
+                    potential_path = os.path.join(self._json_dir, base_name + ext)
+                    if os.path.exists(potential_path):
+                        source_img_path = potential_path
+                        break
+                
+                if source_img_path:
+                    shutil.copy(source_img_path, img_path)
+                else:
+                    raise FileNotFoundError(f"无法找到 {json_name} 对应的图片文件，且 JSON 中无 imageData")
         
         return img_path
     
