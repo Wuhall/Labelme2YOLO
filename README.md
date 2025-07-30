@@ -64,5 +64,7 @@ Script would generate YOLO format text label and image under **labelme_json_dir*
 /home/username/labelme_json_dir/2.png
 ```
 
-##
-Only tested on Centos 7/Python 3.6 environment.
+## Similar projects
+- https://github.com/greatv/labelme2yolo
+  - `pip install labelme2yolo`
+  - `labelme2yolo  --json_dir ./ --val_size 0.2 --output_format polygon`
