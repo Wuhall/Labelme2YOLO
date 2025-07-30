@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - 支持多种常见图片格式：`.png`, `.jpg`, `.jpeg`, `.bmp`, `.tiff`
   - 保持向后兼容性：优先使用原有的 base64 解码逻辑
   - 改进错误处理：提供更清晰的中文错误信息
+- **直接采用从本地目录复制同名文件的方式**
+  - 从base64重建的图片体积比原始图片还大
 
 ### Technical Details
 - 修改了 `_save_yolo_image()` 方法中的图像处理逻辑
